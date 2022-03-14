@@ -1,0 +1,79 @@
+.ProfileInfo{
+    display: grid;
+    grid-gap: 30px;
+    grid-template-columns: 2fr 5fr;
+    grid-template-areas:
+    "avatar disc"
+    "button1 button2"
+    "addinfo addinfo"
+;
+}
+.Avatar{
+    grid-area: avatar;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+.Avatar button{
+    margin-top: 10px;
+}
+.Description{
+    grid-area: disc;
+    margin: 10px;
+
+}
+.Button1{
+    grid-area: button1;
+    margin-left: 10px;
+}
+.Button2{
+    grid-area: button2;
+    margin-left: 10px;
+}
+.AdInfo{
+    grid-area: addinfo;
+}
+.AdInfoBlock{
+    display: grid;
+    margin-left: 10px;
+    grid-template-columns: 1.5fr 3fr;
+    grid-gap: 20px;
+}
+.StatusBlock{
+    font-size: 120%;
+    width: 50%;
+}
+.FriendCountBlock{
+    font-size: 120%;
+}
+.AboutMe{
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: 1.5fr 4fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+.AdditAboutMe{
+    display: grid;
+    grid-template-columns: 0.8fr 4fr;
+    grid-template-rows: 35px 35px;
+}
+.AboutMeTitle{
+    color: gray;
+    font-size: 120%;
+}
+.AboutMeData{
+    font-size: 120%;
+    color: rgb(65, 106, 146);
+}
+.Contacts{
+    font-size: 110%;
+
+}
+.AdInfoLine{
+    border-width: 1px;
+}
+.ProfileForm{
+    display: grid;
+    grid-template-columns: 300px 300px;
+    grid-gap: 50px;
+    margin-left: 10px;
+}

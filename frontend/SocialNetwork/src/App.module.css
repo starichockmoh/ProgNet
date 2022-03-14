@@ -1,0 +1,33 @@
+.appWrapperContent {
+  background-color: aliceblue;
+  border-radius: 10px;
+}
+.globalError{
+  border-radius: 4px;
+  border: maroon solid 3px;
+  color: maroon;
+}
+
+.site_layout_content {
+  background: #fff;
+  padding: 24px;
+  margin-left: 100px;
+  margin-right: 100px;
+  min-height: 280px;
+  width: 1000px;
+}
+
+.Header{
+  position: sticky;
+  top: 0;
+  z-index: 3;
+}
+.Footer{
+  text-align: center
+}
+
+
+
+
+
+
