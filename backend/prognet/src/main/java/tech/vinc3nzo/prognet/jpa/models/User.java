@@ -1,11 +1,10 @@
-package tech.vinc3nzo.prognet.entity;
+package tech.vinc3nzo.prognet.jpa.models;
 
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
-
-import static javax.persistence.CascadeType.ALL;
 
 /**
  * The class representing a basic entity (or a model)
@@ -17,7 +16,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToMany(cascade=ALL, mappedBy="user")
+    @OneToMany(cascade = CascadeType.PERSIST)
     private List<User> following;
 
     @OneToOne @MapsId
@@ -53,6 +52,7 @@ public class User {
         this.aboutMe = aboutMe;
         this.email = email;
         this.password = password;
+        this.following = new ArrayList<>();
     }
 
     /**
@@ -70,6 +70,7 @@ public class User {
         this.aboutMe = aboutMe;
         this.email = email;
         this.password = password;
+        this.following = new ArrayList<>();
     }
 
     public Long getId() {
