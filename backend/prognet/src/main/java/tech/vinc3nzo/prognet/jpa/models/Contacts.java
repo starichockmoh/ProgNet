@@ -1,4 +1,4 @@
-package tech.vinc3nzo.prognet.entity;
+package tech.vinc3nzo.prognet.jpa.models;
 
 import javax.persistence.*;
 
