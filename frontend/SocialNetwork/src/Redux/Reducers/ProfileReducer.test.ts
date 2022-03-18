@@ -1,4 +1,3 @@
-import App from "../../App";
 import React from "react";
 import ProfileReducer, {ProfileActions} from "./ProfileReducer";
 import {NullableType, ProfileType} from "../../Types/Types";
