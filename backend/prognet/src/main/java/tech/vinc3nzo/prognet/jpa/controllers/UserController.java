@@ -4,8 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import tech.vinc3nzo.prognet.jpa.models.User;
 import tech.vinc3nzo.prognet.jpa.repositories.UserRepository;
+import tech.vinc3nzo.prognet.models.CommonResponseObject;
+import tech.vinc3nzo.prognet.models.util.ResultCode;
 
 import java.util.List;
 
@@ -16,7 +17,12 @@ public class UserController {
     private UserRepository userRepository;
 
     @GetMapping("/users")
-    public ResponseEntity<List<User>> all() {
-        return ResponseEntity.ok(userRepository.findAll());
+    public ResponseEntity<CommonResponseObject> all() {
+        return ResponseEntity.ok(
+                new CommonResponseObject(
+                        userRepository.findAll(),
+                        List.of(),
+                        List.of(),
+                        ResultCode.SUCCESS));
     }
 }
