@@ -9,7 +9,6 @@ import {ChatMessageTypeWithId} from "../../../../Redux/Reducers/ChatReducer";
 export const ChatMessages: React.FC<{ MessagesArray: Array<ChatMessageTypeWithId> }> = ({MessagesArray}) => {
     const [IsAutoScroll, SetAutoScroll] = useState(true)
     const MessagesAnchor = useRef<HTMLDivElement>(null)
-    debugger
     const onScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
         const elem = e.currentTarget
         if (Math.abs((elem.scrollHeight - elem.scrollTop) - elem.clientHeight) <= 20) {
