@@ -96,6 +96,21 @@ export const AuthAPI = {
             captcha
         }).then(res => res.data)
     },
+    // async TestLoginJava() {
+    //     const response: any = await axios({
+    //         method: 'post',
+    //         url: 'http://localhost:8080/api/auth/login',
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //         data:{
+    //           username: "randomuser123",
+    //           password: "password3"
+    //         }
+    //     })
+    //     console.log(response)
+    //     return response
+    // },
     AuthLogOut() {
         return AxiosInstance.post<LogoutResponseType>(`auth/logout`).then(res => res.data)
 

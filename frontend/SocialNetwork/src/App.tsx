@@ -27,6 +27,7 @@ import { TestApp } from './Components/MiniApps/Apps/TestApp/TestApp';
 import {TestApp1} from "./Components/MiniApps/Apps/TestApp1/TestApp1";
 import {TestApp4} from "./Components/MiniApps/Apps/TestApp4/TestApp4";
 import {TestingUseState} from "./Hooks/TestingUseState";
+import {AuthAPI} from "./Api/Api";
 
 
 const Music = React.lazy(() => import("./Components/Music/Music"));
@@ -58,6 +59,8 @@ const App: React.FC = () => {
             window.removeEventListener("unhandledrejection", catchAllErrors)
         }
     }, [])
+
+
     if (!initialized) {
         return <AppPreloader/>
     }
