@@ -9,6 +9,7 @@ import tech.vinc3nzo.prognet.models.CommonResponseObject;
 import tech.vinc3nzo.prognet.models.util.ResultCode;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "/api")
@@ -20,9 +21,11 @@ public class UserController {
     public ResponseEntity<CommonResponseObject> all() {
         return ResponseEntity.ok(
                 new CommonResponseObject(
-                        userRepository.findAll(),
+                        Map.of("users", userRepository.findAll()),
                         List.of(),
                         List.of(),
                         ResultCode.SUCCESS));
     }
+
+
 }

@@ -32,9 +32,9 @@ public class FieldErrorObject {
 
     @Override
     public String toString() {
-        return "FieldErrorObject[" +
+        return "FieldErrorObject{" +
                 "field='" + field + '\'' +
                 ", error='" + error + '\'' +
-                ']';
+                '}';
     }
 }

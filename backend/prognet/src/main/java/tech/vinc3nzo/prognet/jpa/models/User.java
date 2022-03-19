@@ -3,24 +3,24 @@ package tech.vinc3nzo.prognet.jpa.models;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * The class representing a basic entity (or a model)
  * instances of which are to be stored in a database.
  */
 @Entity
+@Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
 
     @OneToMany(cascade = CascadeType.PERSIST)
     private List<User> following;
-
-    @OneToOne @MapsId
-    private Contacts contacts;
 
     private String firstName;
     private String lastName;
@@ -31,20 +31,16 @@ public class User {
     private String status;
     private String email;
     private String password;
+    private String username;
+    private Date dateCreated;
+
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Contacts contacts;
 
     protected User() { }
 
-    /**
-     * Constructs a new User instance.
-     * @param firstName first name of a user
-     * @param lastName last name of a user
-     * @param patronymic patronymic of a user
-     * @param aboutMe short user's description
-     * @param email user's email address
-     * @param password user's password
-     */
     public User(String firstName, String lastName, String patronymic,
-                String aboutMe, @NonNull String email, @NonNull String password)
+                String aboutMe, @NonNull String email, @NonNull String password, @NonNull String username)
     {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -52,25 +48,32 @@ public class User {
         this.aboutMe = aboutMe;
         this.email = email;
         this.password = password;
+        this.username = username;
         this.following = new ArrayList<>();
+        this.dateCreated = new Date(System.currentTimeMillis());
+        this.lookingForAJob = false;
+        this.lookingForAJobDescription = "";
+        this.status = "";
+        this.contacts = new Contacts(this);
     }
 
-    /**
-     * Constructs a new User instance.
-     * @param fullName a user's (whitespace-separated) full name
-     * @param aboutMe short user's description
-     * @param email user's email address
-     * @param password user's password
-     */
-    public User(String fullName, String aboutMe, @NonNull String email, @NonNull String password) {
-        String[] name = fullName.split("\\s?", 2);
-        this.firstName = name.length >= 1 ? name[0] : "";
-        this.lastName = name.length >= 2 ? name[1] : "";
-        this.patronymic = name.length >= 3 ? name[2] : "";
+    public User(String fullName, String aboutMe, @NonNull String email,
+                @NonNull String password, @NonNull String username)
+    {
+        String[] splited = fullName.split("\\s+");
+        this.firstName = splited.length >= 1 ? splited[0] : "";
+        this.lastName = splited.length >= 2 ? splited[1] : "";
+        this.patronymic = splited.length >= 3 ? splited[2] : "";
         this.aboutMe = aboutMe;
         this.email = email;
         this.password = password;
+        this.username = username;
         this.following = new ArrayList<>();
+        this.dateCreated = new Date(System.currentTimeMillis());
+        this.lookingForAJob = false;
+        this.lookingForAJobDescription = "";
+        this.status = "";
+        this.contacts = new Contacts(this);
     }
 
     public Long getId() {
@@ -87,14 +90,6 @@ public class User {
 
     public void setFollowing(List<User> following) {
         this.following = following;
-    }
-
-    public Contacts getContacts() {
-        return contacts;
-    }
-
-    public void setContacts(Contacts contacts) {
-        this.contacts = contacts;
     }
 
     public String getFirstName() {
@@ -169,12 +164,62 @@ public class User {
         this.password = password;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public Contacts getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(Contacts contacts) {
+        this.contacts = contacts;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User)o;
+        return lookingForAJob == user.lookingForAJob
+                && id.equals(user.id)
+                && Objects.equals(following, user.following)
+                && Objects.equals(firstName, user.firstName)
+                && Objects.equals(lastName, user.lastName)
+                && Objects.equals(patronymic, user.patronymic)
+                && Objects.equals(aboutMe, user.aboutMe)
+                && Objects.equals(lookingForAJobDescription, user.lookingForAJobDescription)
+                && Objects.equals(status, user.status)
+                && email.equals(user.email)
+                && password.equals(user.password)
+                && username.equals(user.username)
+                && Objects.equals(dateCreated, user.dateCreated);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, following, firstName, lastName,
+                patronymic, aboutMe, lookingForAJob, lookingForAJobDescription,
+                status, email, password, username, dateCreated);
+    }
+
     @Override
     public String toString() {
-        return "User[" +
+        return "User{" +
                 "id=" + id +
                 ", following=" + following +
-                ", contacts=" + contacts +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", patronymic='" + patronymic + '\'' +
@@ -184,6 +229,8 @@ public class User {
                 ", status='" + status + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ']';
+                ", username='" + username + '\'' +
+                ", dateCreated=" + dateCreated +
+                '}';
     }
 }

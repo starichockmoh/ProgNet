@@ -1,10 +1,13 @@
 package tech.vinc3nzo.prognet.jpa.models;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
+@Table(name = "contacts")
 public class Contacts {
     @Id
+    @GeneratedValue
     private Long id;
 
     private String facebook;
@@ -16,23 +19,28 @@ public class Contacts {
     private String website;
     private String youtube;
 
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     protected Contacts() { }
 
-    // TODO: discover what the MainLink really is.
-    /**
-     * Constructs a new Contacts instance.
-     * @param facebook link to a Facebook profile
-     * @param github link to a GitHub profile
-     * @param instagram link to an Instagram profile
-     * @param mainLink
-     * @param twitter link to a Twitter profile
-     * @param vk link to a Vkontakte profile
-     * @param website link to a person's website
-     * @param youtube link to a person's YouTube channel
-     */
-    public Contacts(String facebook, String github, String instagram, String mainLink,
+    public Contacts(User user) {
+        this.user = user;
+        facebook = "";
+        github = "";
+        instagram = "";
+        mainLink = "";
+        twitter = "";
+        vk = "";
+        website = "";
+        youtube = "";
+    }
+
+    public Contacts(User user, String facebook, String github, String instagram, String mainLink,
                     String twitter, String vk, String website, String youtube)
     {
+        this.user = user;
         this.facebook = facebook;
         this.github = github;
         this.instagram = instagram;
@@ -113,5 +121,52 @@ public class Contacts {
 
     public void setYoutube(String youtube) {
         this.youtube = youtube;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Contacts{" +
+                "id=" + id +
+                ", facebook='" + facebook + '\'' +
+                ", github='" + github + '\'' +
+                ", instagram='" + instagram + '\'' +
+                ", mainLink='" + mainLink + '\'' +
+                ", twitter='" + twitter + '\'' +
+                ", vk='" + vk + '\'' +
+                ", website='" + website + '\'' +
+                ", youtube='" + youtube + '\'' +
+                ", user=" + user +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Contacts)) return false;
+        Contacts contacts = (Contacts) o;
+        return Objects.equals(id, contacts.id)
+                && Objects.equals(facebook, contacts.facebook)
+                && Objects.equals(github, contacts.github)
+                && Objects.equals(instagram, contacts.instagram)
+                && Objects.equals(mainLink, contacts.mainLink)
+                && Objects.equals(twitter, contacts.twitter)
+                && Objects.equals(vk, contacts.vk)
+                && Objects.equals(website, contacts.website)
+                && Objects.equals(youtube, contacts.youtube)
+                && Objects.equals(user, contacts.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, facebook, github, instagram,
+                mainLink, twitter, vk, website, youtube);
     }
 }

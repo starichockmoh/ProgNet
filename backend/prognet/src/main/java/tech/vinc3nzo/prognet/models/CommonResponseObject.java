@@ -1,31 +1,34 @@
 package tech.vinc3nzo.prognet.models;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * A compatibility layer object between the
  * old API and the new one.
  */
 public class CommonResponseObject {
-    private Object data;
+    private Map<String, Object> data;
     private List<String> messages;
     private List<FieldErrorObject> fieldsErrors;
     private Integer resultCode;
 
     protected CommonResponseObject() { }
 
-    public CommonResponseObject(Object data, List<String> messages, List<FieldErrorObject> fieldsErrors, Integer resultCode) {
+    public CommonResponseObject(Map<String, Object> data, List<String> messages,
+                                List<FieldErrorObject> fieldsErrors, Integer resultCode)
+    {
         this.data = data;
         this.messages = messages;
         this.fieldsErrors = fieldsErrors;
         this.resultCode = resultCode;
     }
 
-    public Object getData() {
+    public Map<String, Object> getData() {
         return data;
     }
 
-    public void setData(Object data) {
+    public void setData(Map<String, Object> data) {
         this.data = data;
     }
 
@@ -55,11 +58,11 @@ public class CommonResponseObject {
 
     @Override
     public String toString() {
-        return "ResponseObject[" +
+        return "CommonResponseObject{" +
                 "data=" + data +
                 ", messages=" + messages +
                 ", fieldsErrors=" + fieldsErrors +
                 ", resultCode=" + resultCode +
-                ']';
+                '}';
     }
 }
