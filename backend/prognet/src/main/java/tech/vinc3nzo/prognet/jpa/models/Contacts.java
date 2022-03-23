@@ -4,10 +4,9 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "contacts")
 public class Contacts {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String facebook;
@@ -19,14 +18,7 @@ public class Contacts {
     private String website;
     private String youtube;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
-    protected Contacts() { }
-
-    public Contacts(User user) {
-        this.user = user;
+    public Contacts() {
         facebook = "";
         github = "";
         instagram = "";
@@ -37,10 +29,9 @@ public class Contacts {
         youtube = "";
     }
 
-    public Contacts(User user, String facebook, String github, String instagram, String mainLink,
+    public Contacts(String facebook, String github, String instagram, String mainLink,
                     String twitter, String vk, String website, String youtube)
     {
-        this.user = user;
         this.facebook = facebook;
         this.github = github;
         this.instagram = instagram;
@@ -123,14 +114,6 @@ public class Contacts {
         this.youtube = youtube;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     @Override
     public String toString() {
         return "Contacts{" +
@@ -143,7 +126,6 @@ public class Contacts {
                 ", vk='" + vk + '\'' +
                 ", website='" + website + '\'' +
                 ", youtube='" + youtube + '\'' +
-                ", user=" + user +
                 '}';
     }
 
@@ -160,8 +142,7 @@ public class Contacts {
                 && Objects.equals(twitter, contacts.twitter)
                 && Objects.equals(vk, contacts.vk)
                 && Objects.equals(website, contacts.website)
-                && Objects.equals(youtube, contacts.youtube)
-                && Objects.equals(user, contacts.user);
+                && Objects.equals(youtube, contacts.youtube);
     }
 
     @Override

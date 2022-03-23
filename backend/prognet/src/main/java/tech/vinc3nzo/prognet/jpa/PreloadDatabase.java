@@ -6,7 +6,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import tech.vinc3nzo.prognet.jpa.models.Contacts;
 import tech.vinc3nzo.prognet.jpa.models.User;
 import tech.vinc3nzo.prognet.jpa.repositories.UserRepository;
 
