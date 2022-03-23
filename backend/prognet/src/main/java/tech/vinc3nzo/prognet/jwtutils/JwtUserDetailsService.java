@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import tech.vinc3nzo.prognet.jpa.repositories.UserRepository;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {

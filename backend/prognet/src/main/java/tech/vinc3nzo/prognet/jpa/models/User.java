@@ -3,6 +3,7 @@ package tech.vinc3nzo.prognet.jpa.models;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
+import java.net.URI;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,10 +14,9 @@ import java.util.Objects;
  * instances of which are to be stored in a database.
  */
 @Entity
-@Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToMany(cascade = CascadeType.PERSIST)
@@ -33,8 +33,10 @@ public class User {
     private String password;
     private String username;
     private Date dateCreated;
+    private URI small; // small profile image
+    private URI large; // large profile image
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne @MapsId
     private Contacts contacts;
 
     protected User() { }
@@ -54,7 +56,9 @@ public class User {
         this.lookingForAJob = false;
         this.lookingForAJobDescription = "";
         this.status = "";
-        this.contacts = new Contacts(this);
+        this.contacts = new Contacts();
+        this.small = null;
+        this.large = null;
     }
 
     public User(String fullName, String aboutMe, @NonNull String email,
@@ -73,7 +77,85 @@ public class User {
         this.lookingForAJob = false;
         this.lookingForAJobDescription = "";
         this.status = "";
-        this.contacts = new Contacts(this);
+        this.contacts = new Contacts();
+        this.small = null;
+        this.large = null;
+    }
+
+    public User(String firstName, String lastName, String patronymic,
+                String aboutMe, @NonNull String email, @NonNull String password, @NonNull String username,
+                URI smallImage, URI largeImage)
+    {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.patronymic = patronymic;
+        this.aboutMe = aboutMe;
+        this.email = email;
+        this.password = password;
+        this.username = username;
+        this.following = new ArrayList<>();
+        this.dateCreated = new Date(System.currentTimeMillis());
+        this.lookingForAJob = false;
+        this.lookingForAJobDescription = "";
+        this.status = "";
+        this.contacts = new Contacts();
+        this.small = smallImage;
+        this.large = largeImage;
+    }
+
+    public User(String fullName, String aboutMe, @NonNull String email,
+                @NonNull String password, @NonNull String username,
+                URI smallImage, URI largeImage)
+    {
+        String[] splited = fullName.split("\\s+");
+        this.firstName = splited.length >= 1 ? splited[0] : "";
+        this.lastName = splited.length >= 2 ? splited[1] : "";
+        this.patronymic = splited.length >= 3 ? splited[2] : "";
+        this.aboutMe = aboutMe;
+        this.email = email;
+        this.password = password;
+        this.username = username;
+        this.following = new ArrayList<>();
+        this.dateCreated = new Date(System.currentTimeMillis());
+        this.lookingForAJob = false;
+        this.lookingForAJobDescription = "";
+        this.status = "";
+        this.contacts = new Contacts();
+        this.small = smallImage;
+        this.large = largeImage;
+    }
+
+    public void follow(User user) {
+        if (!isFollowing(user)) {
+            following.add(user);
+        }
+    }
+
+    public void unfollow(User user) {
+        if (isFollowing(user)) {
+            following.add(user);
+        }
+    }
+
+    public boolean isFollowing(User user) {
+        return following.stream()
+                .anyMatch(u -> Objects.equals(u, user));
+    }
+
+    public URI getSmall() {
+        return small;
+    }
+
+    public void setSmall(URI small) {
+        this.small = small;
+    }
+
+    public URI getLarge() {
+        return large;
+    }
+
+    public void setLarge(URI large) {
+        this.large = large;
     }
 
     public Long getId() {
@@ -193,26 +275,12 @@ public class User {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
         User user = (User)o;
-        return lookingForAJob == user.lookingForAJob
-                && id.equals(user.id)
-                && Objects.equals(following, user.following)
-                && Objects.equals(firstName, user.firstName)
-                && Objects.equals(lastName, user.lastName)
-                && Objects.equals(patronymic, user.patronymic)
-                && Objects.equals(aboutMe, user.aboutMe)
-                && Objects.equals(lookingForAJobDescription, user.lookingForAJobDescription)
-                && Objects.equals(status, user.status)
-                && email.equals(user.email)
-                && password.equals(user.password)
-                && username.equals(user.username)
-                && Objects.equals(dateCreated, user.dateCreated);
+        return username.equals(user.username);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, following, firstName, lastName,
-                patronymic, aboutMe, lookingForAJob, lookingForAJobDescription,
-                status, email, password, username, dateCreated);
+        return Objects.hash(username);
     }
 
     @Override
@@ -231,6 +299,9 @@ public class User {
                 ", password='" + password + '\'' +
                 ", username='" + username + '\'' +
                 ", dateCreated=" + dateCreated +
+                ", small=" + small +
+                ", large=" + large +
+                ", contacts=" + contacts +
                 '}';
     }
 }
