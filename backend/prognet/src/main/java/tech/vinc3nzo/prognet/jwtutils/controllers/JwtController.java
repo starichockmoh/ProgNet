@@ -1,22 +1,22 @@
 package tech.vinc3nzo.prognet.jwtutils.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import tech.vinc3nzo.prognet.jpa.repositories.UserRepository;
 import tech.vinc3nzo.prognet.jwtutils.*;
 import tech.vinc3nzo.prognet.jwtutils.models.*;
-import tech.vinc3nzo.prognet.rspentities.CommonResponseObject;
-import tech.vinc3nzo.prognet.rspentities.FieldErrorObject;
-import tech.vinc3nzo.prognet.rspentities.util.ResultCode;
+import tech.vinc3nzo.prognet.models.CommonResponseObject;
+import tech.vinc3nzo.prognet.models.FieldErrorObject;
+import tech.vinc3nzo.prognet.models.util.ResultCode;
 
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@RestController
 @CrossOrigin
 @RequestMapping(path = "/api")
 public class JwtController {

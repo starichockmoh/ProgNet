@@ -1,4 +1,4 @@
-package tech.vinc3nzo.prognet.rspentities.util;
+package tech.vinc3nzo.prognet.models.util;
 
 public class ResultCode {
     /**
@@ -24,17 +24,4 @@ public class ResultCode {
      * has been rejected due to errors in user credentials.
      */
     public static final int AUTH_REJECTED = 3;
-
-    /**
-     * The code means that something went wrong
-     * when server tried to identify you. This error
-     * is rather not for the clients to deal with.
-     */
-    public static final int AUTH_ERROR = 4;
-
-    /**
-     * The code that specifies that optional request parameter(s)
-     * does not satisfy some criteria.
-     */
-    public static final int OPT_PARAM_ERROR = 5;
 }
