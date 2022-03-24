@@ -42,6 +42,14 @@ public class PreloadDatabase {
             user1.getContacts().setYoutube("https://www.youtube.com/c/AtomicShrimp");
             user1.getContacts().setGithub("https://github.com/yuk7/wsldl");
 
+            repository.save(user1);
+            repository.save(user2);
+            repository.save(user3);
+            repository.save(user4);
+            repository.save(user5);
+            repository.save(user6);
+            repository.save(user7);
+
             logger.info("Preloaded the database with some dummy Users.");
         };
     }
