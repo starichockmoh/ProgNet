@@ -97,7 +97,8 @@ public class UserController {
 
         return ResponseEntity.ok(
                 new CommonResponseObject(
-                        Map.of("users", users),
+                        Map.of("users", users,
+                                "totalCount", userRepository.findAll().size()),
                         List.of(),
                         List.of(),
                         ResultCode.SUCCESS));
@@ -120,7 +121,7 @@ public class UserController {
         if (requestedUser == null) {
             return ResponseEntity.ok(
                     new CommonResponseObject(
-                            Map.of(),
+                            Map.of("totalCount", 0),
                             List.of("User not found."),
                             List.of(),
                             ResultCode.SUCCESS));
@@ -128,7 +129,8 @@ public class UserController {
 
         return ResponseEntity.ok(
                 new CommonResponseObject(
-                        Map.of("users", List.of(requestedUser)),
+                        Map.of("users", List.of(requestedUser),
+                                "totalCount", 1),
                         List.of(),
                         List.of(),
                         ResultCode.SUCCESS));
