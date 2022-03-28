@@ -47,15 +47,12 @@ public class UserController {
                                                     @RequestParam(required = false) String term)
     {
         // the requester's user object is needed. So go ahead and retrieve it.
-        List<User> requester = userRepository.findAll().parallelStream()
-                .filter(u -> Objects.equals(u.getUsername(), principal.getName()))
-                .toList();
-        if (requester.size() == 0) {
+        User requester = userRepository.findByUsername(principal.getName()).orElse(null);
+        if (requester == null) {
             return ResponseEntity
                     .status(HttpStatus.UNAUTHORIZED)
                     .build();
         }
-        User currentUser = requester.get(0); // requester
 
         // process the request based of query parameters presence
 
@@ -63,22 +60,22 @@ public class UserController {
         // the code here is quite robust, but it is easy to read and understand it
         if (term == null) {
             if (count == null && page == null) {
-                return usersWithPageParameters(currentUser, ServiceSettings.USERS_PER_PAGE_COUNT,
+                return usersWithPageParameters(requester, ServiceSettings.USERS_PER_PAGE_COUNT,
                         ServiceSettings.FIRST_PAGE);
             }
             if (count != null && page != null) {
-                return usersWithPageParameters(currentUser, count, page);
+                return usersWithPageParameters(requester, count, page);
             }
             if (count != null && page == null) {
-                return usersWithPageParameters(currentUser, count, ServiceSettings.FIRST_PAGE);
+                return usersWithPageParameters(requester, count, ServiceSettings.FIRST_PAGE);
             }
             if (count == null && page != null) {
-                return usersWithPageParameters(currentUser, ServiceSettings.USERS_PER_PAGE_COUNT, page);
+                return usersWithPageParameters(requester, ServiceSettings.USERS_PER_PAGE_COUNT, page);
             }
         }
 
         // term != null
-        return usersWithUserParameter(currentUser, term);
+        return usersWithUserParameter(requester, term);
     }
 
     private ResponseEntity<CommonResponseObject> usersWithPageParameters(@NonNull User user,
@@ -107,22 +104,20 @@ public class UserController {
     private ResponseEntity<CommonResponseObject> usersWithUserParameter(@NonNull User user,
                                                                         @NonNull String term)
     {
-        UserResponseEntity requestedUser = userRepository.findAll().parallelStream()
-                .filter(u -> Objects.equals(u.getUsername(), term))
+        UserResponseEntity requestedUser = userRepository.findByUsername(term)
                 .map(u -> new UserResponseEntity(
                         u.getUsername(),
                         u.getId(),
                         new PhotoSet(u.getSmall(), u.getLarge()),
                         u.getStatus(),
                         user.isFollowing(u)))
-                .findFirst()
                 .orElse(null);
 
         if (requestedUser == null) {
             return ResponseEntity.ok(
                     new CommonResponseObject(
                             Map.of("totalCount", 0),
-                            List.of("User not found."),
+                            List.of("User not found"),
                             List.of(),
                             ResultCode.SUCCESS));
         }

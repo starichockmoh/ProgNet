@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import io.jsonwebtoken.*;
+import tech.vinc3nzo.prognet.jwtutils.config.ServiceSettings;
 
 import java.util.*;
 
@@ -13,8 +14,6 @@ import java.util.*;
  */
 @Component
 public class TokenManager {
-    public static final long TOKEN_VALIDITY = 10 * 60 * 60;
-
     @Value("${tech.vinc3nzo.jwtutils.secret}")
     private String jwtSecret;
 
@@ -31,7 +30,7 @@ public class TokenManager {
                 .setClaims(claims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + TOKEN_VALIDITY * 1000))
+                .setExpiration(new Date(System.currentTimeMillis() + ServiceSettings.TOKEN_VALIDITY * 1000))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }

@@ -10,7 +10,8 @@ import tech.vinc3nzo.prognet.jpa.models.User;
 import tech.vinc3nzo.prognet.jpa.repositories.UserRepository;
 
 @Configuration
-public class PreloadDatabase {
+public class
+PreloadDatabase {
     private static final Logger logger = LoggerFactory.getLogger(PreloadDatabase.class);
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
@@ -23,7 +24,7 @@ public class PreloadDatabase {
             var user2 = new User("Harry Potter James", "I am a good guy",
                     "hairypotter@example.com", encoder.encode("thepasscode"),
                     "h.potter");
-            var user3 = new User("Erich Maria Remarque", "Frontend developer, namesake",
+            var user3 = new User("Erich Maria", "Remarque", "", "Frontend developer, namesake",
                     "em.remarque@example.com", encoder.encode("theKey"),
                     "remarque.frontend");
             var user4 = new User("Barry Berry", "System administrator",

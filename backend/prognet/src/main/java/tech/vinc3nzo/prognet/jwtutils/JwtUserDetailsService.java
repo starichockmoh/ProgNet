@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import tech.vinc3nzo.prognet.jpa.repositories.UserRepository;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
@@ -20,17 +19,8 @@ public class JwtUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException
     {
-        var user = userRepository.findAll().parallelStream()
-                .filter(u -> u.getUsername().equals(username))
-                .toList();
-        if (user.size() == 1) {
-            return new User(user.get(0).getUsername(), user.get(0).getPassword(),
-                    new ArrayList<>());
-        }
-        else {
-            throw new UsernameNotFoundException(
-                    "There is no user with such name in the database: '"
-                    + username + "'");
-        }
+        var user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        return new User(user.getUsername(), user.getPassword(), new ArrayList<>());
     }
 }

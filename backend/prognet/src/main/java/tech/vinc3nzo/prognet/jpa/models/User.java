@@ -4,7 +4,7 @@ import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import java.net.URI;
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -39,6 +39,9 @@ public class User {
     @OneToOne @MapsId
     private Contacts contacts;
 
+    private Date lastLogin;
+    private Integer failedLoginAttempts;
+
     protected User() { }
 
     public User(String firstName, String lastName, String patronymic,
@@ -59,6 +62,8 @@ public class User {
         this.contacts = new Contacts();
         this.small = null;
         this.large = null;
+        this.lastLogin = new Date(System.currentTimeMillis());
+        this.failedLoginAttempts = 0;
     }
 
     public User(String fullName, String aboutMe, @NonNull String email,
@@ -80,6 +85,8 @@ public class User {
         this.contacts = new Contacts();
         this.small = null;
         this.large = null;
+        this.lastLogin = new Date(System.currentTimeMillis());
+        this.failedLoginAttempts = 0;
     }
 
     public User(String firstName, String lastName, String patronymic,
@@ -101,6 +108,8 @@ public class User {
         this.contacts = new Contacts();
         this.small = smallImage;
         this.large = largeImage;
+        this.lastLogin = new Date(System.currentTimeMillis());
+        this.failedLoginAttempts = 0;
     }
 
     public User(String fullName, String aboutMe, @NonNull String email,
@@ -123,6 +132,8 @@ public class User {
         this.contacts = new Contacts();
         this.small = smallImage;
         this.large = largeImage;
+        this.lastLogin = new Date(System.currentTimeMillis());
+        this.failedLoginAttempts = 0;
     }
 
     public void follow(User user) {
@@ -140,6 +151,22 @@ public class User {
     public boolean isFollowing(User user) {
         return following.stream()
                 .anyMatch(u -> Objects.equals(u, user));
+    }
+
+    public Integer getFailedLoginAttempts() {
+        return failedLoginAttempts;
+    }
+
+    public void setFailedLoginAttempts(Integer failedLoginAttempts) {
+        this.failedLoginAttempts = failedLoginAttempts;
+    }
+
+    public Date getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(Date lastLogin) {
+        this.lastLogin = lastLogin;
     }
 
     public URI getSmall() {
@@ -299,9 +326,11 @@ public class User {
                 ", password='" + password + '\'' +
                 ", username='" + username + '\'' +
                 ", dateCreated=" + dateCreated +
+                ", lastLogin=" + lastLogin +
                 ", small=" + small +
                 ", large=" + large +
                 ", contacts=" + contacts +
+                ", failedLoginAttempts=" + failedLoginAttempts +
                 '}';
     }
 }

@@ -1,24 +1,18 @@
 package tech.vinc3nzo.prognet.jwtutils.models;
 
-/**
- * The model representing a form of client's request.
- */
+import org.springframework.lang.NonNull;
+
 public class JwtRequestModel {
     private String username;
     private String password;
+    private String captcha;
 
     protected JwtRequestModel() {}
 
-    /**
-     * Constructs a new JwtRequestModel instance by
-     * username and password {@link java.lang.String}s
-     * provided.
-     * @param username user's login name
-     * @param password user's password
-     */
-    public JwtRequestModel(String username, String password) {
+    public JwtRequestModel(@NonNull String username, @NonNull String password, String captcha) {
         this.username = username;
         this.password = password;
+        this.captcha = captcha;
     }
 
     public String getUsername() {
@@ -35,5 +29,13 @@ public class JwtRequestModel {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getCaptcha() {
+        return captcha;
+    }
+
+    public void setCaptcha(String captcha) {
+        this.captcha = captcha;
     }
 }

@@ -37,4 +37,10 @@ public class ResultCode {
      * does not satisfy some criteria.
      */
     public static final int OPT_PARAM_ERROR = 5;
+
+    /**
+     * This code means that a completed Captcha check is
+     * required for the user to authorize.
+     */
+    public static final int CAPTCHA_REQUIRED = 10;
 }
