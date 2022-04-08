@@ -51,7 +51,7 @@ PreloadDatabase {
             repository.save(user6);
             repository.save(user7);
 
-            logger.info("Preloaded the database with some dummy Users.");
+            logger.info("Preloaded the database with a few dummy Users.");
         };
     }
 }

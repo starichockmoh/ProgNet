@@ -1,4 +1,4 @@
-package tech.vinc3nzo.prognet.jwtutils.config;
+package tech.vinc3nzo.prognet.security.jwtutils.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,8 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import tech.vinc3nzo.prognet.jwtutils.JwtAuthenticationEntryPoint;
-import tech.vinc3nzo.prognet.jwtutils.JwtFilter;
+import tech.vinc3nzo.prognet.security.jwtutils.JwtAuthenticationEntryPoint;
+import tech.vinc3nzo.prognet.security.jwtutils.JwtFilter;
 
 /**
  * Security settings of the service (JWT-related things).

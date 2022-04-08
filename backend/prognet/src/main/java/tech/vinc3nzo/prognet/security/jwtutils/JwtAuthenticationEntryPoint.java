@@ -1,4 +1,4 @@
-package tech.vinc3nzo.prognet.jwtutils;
+package tech.vinc3nzo.prognet.security.jwtutils;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

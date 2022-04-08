@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import tech.vinc3nzo.prognet.jpa.models.User;
 import tech.vinc3nzo.prognet.jpa.repositories.UserRepository;
-import tech.vinc3nzo.prognet.jwtutils.config.ServiceSettings;
+import tech.vinc3nzo.prognet.security.jwtutils.config.ServiceSettings;
 import tech.vinc3nzo.prognet.rspentities.CommonResponseObject;
 import tech.vinc3nzo.prognet.rspentities.PhotoSet;
 import tech.vinc3nzo.prognet.rspentities.UserResponseEntity;
@@ -20,7 +20,6 @@ import tech.vinc3nzo.prognet.rspentities.util.ResultCode;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @Controller
 @RequestMapping(path = "/api")

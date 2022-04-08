@@ -1,4 +1,4 @@
-package tech.vinc3nzo.prognet.jwtutils;
+package tech.vinc3nzo.prognet.security.jwtutils;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import org.slf4j.Logger;

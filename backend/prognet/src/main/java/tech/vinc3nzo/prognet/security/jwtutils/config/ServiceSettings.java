@@ -1,4 +1,4 @@
-package tech.vinc3nzo.prognet.jwtutils.config;
+package tech.vinc3nzo.prognet.security.jwtutils.config;
 
 public class ServiceSettings {
     public static final long USERS_PER_PAGE_COUNT = 10L;

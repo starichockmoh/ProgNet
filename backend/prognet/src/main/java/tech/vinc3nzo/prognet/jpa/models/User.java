@@ -1,6 +1,8 @@
 package tech.vinc3nzo.prognet.jpa.models;
 
 import org.springframework.lang.NonNull;
+import tech.vinc3nzo.prognet.security.Captcha;
+import tech.vinc3nzo.prognet.security.CaptchaPair;
 
 import javax.persistence.*;
 import java.net.URI;
@@ -39,6 +41,11 @@ public class User {
     @OneToOne @MapsId
     private Contacts contacts;
 
+    @OneToOne @MapsId
+    private CaptchaPair captcha;
+
+    private String captchaUrl;
+    private String captchaAnswer;
     private Date lastLogin;
     private Integer failedLoginAttempts;
 
@@ -64,6 +71,7 @@ public class User {
         this.large = null;
         this.lastLogin = new Date(System.currentTimeMillis());
         this.failedLoginAttempts = 0;
+        this.captcha = Captcha.getRandom();
     }
 
     public User(String fullName, String aboutMe, @NonNull String email,
@@ -87,6 +95,7 @@ public class User {
         this.large = null;
         this.lastLogin = new Date(System.currentTimeMillis());
         this.failedLoginAttempts = 0;
+        this.captcha = Captcha.getRandom();
     }
 
     public User(String firstName, String lastName, String patronymic,
@@ -110,6 +119,7 @@ public class User {
         this.large = largeImage;
         this.lastLogin = new Date(System.currentTimeMillis());
         this.failedLoginAttempts = 0;
+        this.captcha = Captcha.getRandom();
     }
 
     public User(String fullName, String aboutMe, @NonNull String email,
@@ -134,6 +144,7 @@ public class User {
         this.large = largeImage;
         this.lastLogin = new Date(System.currentTimeMillis());
         this.failedLoginAttempts = 0;
+        this.captcha = Captcha.getRandom();
     }
 
     public void follow(User user) {
@@ -151,6 +162,14 @@ public class User {
     public boolean isFollowing(User user) {
         return following.stream()
                 .anyMatch(u -> Objects.equals(u, user));
+    }
+
+    public CaptchaPair getCaptcha() {
+        return captcha;
+    }
+
+    public void setCaptcha(CaptchaPair captcha) {
+        this.captcha = captcha;
     }
 
     public Integer getFailedLoginAttempts() {

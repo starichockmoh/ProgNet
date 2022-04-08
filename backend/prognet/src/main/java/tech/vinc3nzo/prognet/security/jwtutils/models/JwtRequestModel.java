@@ -1,4 +1,4 @@
-package tech.vinc3nzo.prognet.jwtutils.models;
+package tech.vinc3nzo.prognet.security.jwtutils.models;
 
 import org.springframework.lang.NonNull;
 

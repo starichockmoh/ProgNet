@@ -1,4 +1,4 @@
-package tech.vinc3nzo.prognet.jwtutils.controllers;
+package tech.vinc3nzo.prognet.security.jwtutils.controllers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,12 +13,15 @@ import tech.vinc3nzo.prognet.exception.CaptchaCheckFailedException;
 import tech.vinc3nzo.prognet.exception.CaptchaRequiredException;
 import tech.vinc3nzo.prognet.jpa.models.User;
 import tech.vinc3nzo.prognet.jpa.repositories.UserRepository;
-import tech.vinc3nzo.prognet.jwtutils.*;
-import tech.vinc3nzo.prognet.jwtutils.config.ServiceSettings;
-import tech.vinc3nzo.prognet.jwtutils.models.*;
+import tech.vinc3nzo.prognet.security.jwtutils.*;
+import tech.vinc3nzo.prognet.security.jwtutils.config.ServiceSettings;
+import tech.vinc3nzo.prognet.security.jwtutils.models.*;
 import tech.vinc3nzo.prognet.rspentities.CommonResponseObject;
 import tech.vinc3nzo.prognet.rspentities.FieldErrorObject;
 import tech.vinc3nzo.prognet.rspentities.util.ResultCode;
+import tech.vinc3nzo.prognet.security.jwtutils.JwtUserDetailsService;
+import tech.vinc3nzo.prognet.security.jwtutils.TokenManager;
+import tech.vinc3nzo.prognet.security.jwtutils.models.JwtRequestModel;
 
 import java.security.Principal;
 import java.util.List;
@@ -76,7 +79,7 @@ public class JwtController {
 
         try {
             // a Captcha check is required
-            if (user.getFailedLoginAttempts() > ServiceSettings.MAX_FAILED_ATTEMPTS) {
+            if (user.getFailedLoginAttempts() >= ServiceSettings.MAX_FAILED_ATTEMPTS) {
                 if (request.getCaptcha() != null) { // if Captcha is provided
                     if (!Objects.equals(request.getCaptcha(), "1234")) { // if Captcha is not OK
                         throw new CaptchaCheckFailedException();
